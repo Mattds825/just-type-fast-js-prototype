@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Just Type Fast</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <div id="app" class="container">
+      <div id="sample-text"></div>
+      <textarea id="typing-input" placeholder="Start typing here..."></textarea>
+      <div>
+        <p>Words per minute: <span id="wpm">0</span></p>
+        <p>Accuracy: <span id="accuracy">100</span>%</p>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
 </html>
