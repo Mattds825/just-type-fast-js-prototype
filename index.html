@@ -7,16 +7,21 @@
     <title>Just Type Fast</title>
   </head>
   <body>
-    <div id="app" class="container">
-      <div id="sample-text"></div>
-      <textarea id="typing-input" placeholder="Start typing here..."></textarea>
-      <div id="keyboard-container"></div>
-      <div>
+    <header>
+      <h1>JUST TYPE FAST</h1>
+    </header>
+    <main id="app" class="container">
+      <div id="sample-text" class="mar-v-1"></div>
+      <textarea id="typing-input" class="mar-v-1" placeholder="Start typing here..."></textarea>
+      <div id="keyboard-container" class="mar-v-1"></div>
+      <div class="scores-container">
         <p>Words per minute: <span id="wpm">0</span></p>
         <p>Accuracy: <span id="accuracy">100</span>%</p>
       </div>
-    </div>
-
+    </main>
+    <footer>
+      <p>&copy JUSTTYPEFAST 2024</p>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/js/app.js"></script>
   </body>

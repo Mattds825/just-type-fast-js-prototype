@@ -1,44 +1,123 @@
+* {
+  background-color: #1a1a1a;
+  font-family: Arial, sans-serif;
+}
+
+
 .container {
-    padding: 1rem;
-    background-color: #1a1a1a;
-    color: white;
-    font-family: Arial, sans-serif;
-  }
+  padding: 1rem;
+  color: white;
+  display: grid;
+  flex-wrap: wrap;
+  align-content: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+}
+
+header h1{
+  color: white;
+  text-align: center;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+footer p{
+  text-align: center;
+  color: #555;
+}
+
+.scores-container{
+  text-align: center;
+}
 
 #typing-input {
-    background-color: #333;
-    border: 1px solid #555;
-    color: white;
-    border-radius: 4px;
-  }
+  background-color: #333;
+  border: 1px solid #555;
+  color: white;
+  border-radius: 4px;
+}
 
-  /* Styles for the keybaord */
+/* Utils */
 
-  .keyboard-row {
-    display: flex;
-    justify-content: center;
-    margin: 0.2rem 0;
+.mar-v-1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.mar-h-1 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.mar-v-2 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.mar-h-2 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Styles for the keybaord */
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin: 0.2rem 0;
+}
+
+.key {
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem; /*align text vertically*/
+  margin: 0.1rem;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #444;
+  color: white;
+  border-radius: 4px;
+}
+
+.key-space {
+  width: 6rem;
+}
+
+.pinkie {
+  background-color: #f28b82;
+}
+.ring {
+  background-color: #fbbc04;
+}
+.middle {
+  background-color: #34a853;
+}
+.index {
+  background-color: #4285f4;
+}
+.thumb {
+  background-color: #ea4335;
+}
+
+@media screen and (max-width: 780px){
+  .key{
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem; /*align text vertically*/
   }
-  
-  .key {
-    width: 3rem;
-    height: 3rem;
-    line-height: 3rem; /*align text vertically*/
-    margin: 0.1rem;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #444;
-    color: white;
-    border-radius: 4px;
+}
+
+@media screen and (max-width: 560px){
+  .key{
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem; /*align text vertically*/
   }
-  
-  .key-space {
-    width: 6rem;
-  }
-  
-  .pinkie { background-color: #f28b82; }
-  .ring { background-color: #fbbc04; }
-  .middle { background-color: #34a853; }
-  .index { background-color: #4285f4; }
-  .thumb { background-color: #ea4335; }
-  
+}
