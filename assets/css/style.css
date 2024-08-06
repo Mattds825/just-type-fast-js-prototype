@@ -44,6 +44,24 @@ footer p{
   border-radius: 4px;
 }
 
+/* Style for the prompt text while typing */
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+.gray {
+  color: gray;
+}
+
+.current {
+  border-bottom: 2px solid blue;
+}
+
 /* Utils */
 
 .mar-v-1 {
