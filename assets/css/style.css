@@ -1,0 +1,44 @@
+.container {
+    padding: 1rem;
+    background-color: #1a1a1a;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+
+#typing-input {
+    background-color: #333;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 4px;
+  }
+
+  /* Styles for the keybaord */
+
+  .keyboard-row {
+    display: flex;
+    justify-content: center;
+    margin: 0.2rem 0;
+  }
+  
+  .key {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem; /*align text vertically*/
+    margin: 0.1rem;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #444;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .key-space {
+    width: 6rem;
+  }
+  
+  .pinkie { background-color: #f28b82; }
+  .ring { background-color: #fbbc04; }
+  .middle { background-color: #34a853; }
+  .index { background-color: #4285f4; }
+  .thumb { background-color: #ea4335; }
+  
