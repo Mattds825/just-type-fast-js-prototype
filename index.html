@@ -7,6 +7,15 @@
     <title>Just Type Fast</title>
   </head>
   <body>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="scores-container">
+          <p>Words per minute: <span id="wpm">0</span></p>
+          <p>Accuracy: <span id="accuracy">100</span>%</p>
+        </div>
+      </div>
+    </div>
     <header>
       <h1>JUST TYPE FAST</h1>
     </header>
@@ -14,10 +23,7 @@
       <div id="sample-text" class="mar-v-1"></div>
       <textarea id="typing-input" class="mar-v-1" placeholder="Start typing here..."></textarea>
       <div id="keyboard-container" class="mar-v-1"></div>
-      <div class="scores-container">
-        <p>Words per minute: <span id="wpm">0</span></p>
-        <p>Accuracy: <span id="accuracy">100</span>%</p>
-      </div>
+    
     </main>
     <footer>
       <p>&copy JUSTTYPEFAST 2024</p>
