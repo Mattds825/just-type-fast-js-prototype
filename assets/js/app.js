@@ -23,6 +23,7 @@ $(document).ready(function () {
   let healthBarDecremnet = 0.5; //how much is decremented each 0.1 second
   let healthBarInterval; // used for setInterval()
   let healthBarWPM = 30; 
+  let healthBarWpmChange = 5;
 
   /* ./Values for healthbar */
 
@@ -139,6 +140,7 @@ $(document).ready(function () {
     } else if (inputValue.length === sampleText.length) {
       console.log("calculating resluts");
       calculateResults();
+      document.getElementById("typing-input").blur();
       modal.style.display = "block";
       resetHealthBar();
     }
@@ -186,8 +188,26 @@ $(document).ready(function () {
     if (event.target == modal) {
       modal.style.display = "none";
       handleRestart();
+      document.getElementById("typing-input").focus();
     }
   };
+
+   // Handle special keys
+  $(document).keydown(function (e) {
+    if (e.key === 'Enter') {
+      if (modal.style.display != "none") { 
+        document.getElementById("typing-input").blur();
+        console.log("enter restart");
+        modal.style.display = "none";
+        inputValue = "";
+        handleRestart();        
+      }
+    } else if (e.key === 'Escape') {
+      handleRestart();
+    } else {
+      document.getElementById("typing-input").focus();
+    }
+  });
 
   // Heandle the healthbar decrement
   const startHealthBarDecrement = () => {
@@ -209,8 +229,8 @@ $(document).ready(function () {
   const resetHealthBar = () => {
     clearInterval(healthBarInterval);
     healthBarWidth = 100;
-    healthBarDecremnet += 0.05; //increase diffulty by 5 wpm
-    healthBarWPM += healthBarDecremnet*100;
+    healthBarDecremnet += healthBarWpmChange/100; //increase diffulty by 5 wpm
+    healthBarWPM += healthBarWpmChange;
     $('#health-bar').css('width', '100%'); // Upadate CSS
   }
 
