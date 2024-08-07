@@ -8,3 +8,5 @@ The goal of this prototype is to port over the function from my [NEXT JS](https:
 ## code used 
 
 modal code template from [W3Schools](https://www.w3schools.com/howto/howto_css_modals.asp)
+
+8bit css style inspiration from this [codepen](https://codepen.io/MatthewShields/pen/pwrXpV)

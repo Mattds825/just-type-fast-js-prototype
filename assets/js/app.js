@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  const sampleText = "The quick brown fox jumped over the lazy dog today";
+  let words = [];
+  let sampleText = "The quick brown fox jumped over the lazy dog today";
   let inputValue = "";
   let startTime = null; // used to calculate result
   let wpm = 0;
@@ -89,7 +90,7 @@ $(document).ready(function () {
 
         // Create key element
         const $keyDiv = $("<div>")
-          .addClass(`key ${keyClass} ${fingerClass}`)
+          .addClass(`eightbit-btn key ${keyClass} ${fingerClass}`)
           .text(isSpacebar ? "" : key) // Spacebar is empty
           .attr("data-key", key); // Store key value for reference
 
@@ -100,6 +101,24 @@ $(document).ready(function () {
     });
   };
 
+   // Fetch the 200 most typed words from the JSON file
+  $.getJSON('assets/words.json', function (data) {
+    words = data.words;
+    displaySampleText();
+  });
+
+  // Generate a new sample text
+  const generateSampleText = () => {
+    const phrase = [];
+    while (phrase.length < 10) {
+      const word = words[Math.floor(Math.random() * words.length)];
+      if (phrase.length === 0 || phrase[phrase.length - 1] !== word) {
+        phrase.push(word);
+      }
+    }
+    return phrase.join(' ');
+  };
+
   // Highlight the corresponding key on the virtual keyboard
   const highlightKey = (key) => {
     $('.key').removeClass('highlighted'); // remove highleted from all keys
@@ -108,6 +127,7 @@ $(document).ready(function () {
 
   // Display the sample text
   const displaySampleText = () => {
+    sampleText = generateSampleText();
     $("#sample-text").empty();
     sampleText.split("").forEach((char, idx) => {
       $("#sample-text").append(`<span id="char-${idx}">${char}</span>`);
@@ -175,7 +195,6 @@ $(document).ready(function () {
   };
 
   //Initial Render
-  displaySampleText();
   renderKeyboard();
 
   // Get the modal
@@ -225,11 +244,18 @@ $(document).ready(function () {
         healthBarWidth = 0;
         clearInterval(healthBarInterval);
         alert("Game Over");
+        healthBarWPM = 30; 
         handleRestart();
         resetHealthBar();
       }
       $('#health-bar').css('width', healthBarWidth + '%'); // Update CSS
     }, 100); //Interval of 0.1 seconds
+  };
+
+  // Move to the next phrase
+  const nextPhrase = () => {
+    // sampleText = generateSampleText();
+    displaySampleText();
   };
 
   // Reset the healthbar
@@ -247,15 +273,12 @@ $(document).ready(function () {
     startTime = null;
     wpm = 0;
     accuracy = 100;
+    resetHealthBar();
+    nextPhrase();
     $('.key').removeClass('highlighted'); // remove highleted from all keys
     $("#typing-input").val("");
     $("#wpm").text("0");
     $("#accuracy").text("100");
     $("#sample-text").children().removeClass("correct incorrect gray current");
-    displaySampleText();
   };
 });
-
-// $(function () {
-//   $("#keybaord-container").load("keyboard.html");
-// });
