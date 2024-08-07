@@ -100,6 +100,12 @@ $(document).ready(function () {
     });
   };
 
+  // Highlight the corresponding key on the virtual keyboard
+  const highlightKey = (key) => {
+    $('.key').removeClass('highlighted'); // remove highleted from all keys
+    $(`.key[data-key="${key == " " ? 'Space' : key.toUpperCase()}"]`).addClass('highlighted');
+  };
+
   // Display the sample text
   const displaySampleText = () => {
     $("#sample-text").empty();
@@ -144,7 +150,8 @@ $(document).ready(function () {
       modal.style.display = "block";
       resetHealthBar();
     }
-    updateHighlightedText();
+    updateHighlightedText(); // highlight correct keys in sample text
+    highlightKey(inputValue.slice(-1)); // Highlight the last typed key
   });
 
   // Highlight the text based on the user's input
@@ -240,6 +247,7 @@ $(document).ready(function () {
     startTime = null;
     wpm = 0;
     accuracy = 100;
+    $('.key').removeClass('highlighted'); // remove highleted from all keys
     $("#typing-input").val("");
     $("#wpm").text("0");
     $("#accuracy").text("100");

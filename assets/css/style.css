@@ -125,6 +125,10 @@ footer p{
   background-color: #ea4335;
 }
 
+.key.highlighted {
+  border: 2px solid yellow;
+}
+
 @media screen and (max-width: 780px){
   .key{
     width: 2rem;
