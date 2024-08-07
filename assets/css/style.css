@@ -141,6 +141,23 @@ footer p{
   }
 }
 
+/* Health Bar Styles */
+
+#health-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #444;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+#health-bar {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  transition: width 0.2s linear;
+}
+
 /* Score Modal */
 
 /* The Modal (background) */

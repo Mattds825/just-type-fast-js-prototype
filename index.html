@@ -13,6 +13,7 @@
         <div class="scores-container">
           <p>Words per minute: <span id="wpm">0</span></p>
           <p>Accuracy: <span id="accuracy">100</span>%</p>
+          <p>Healthbar WPM: <span id="health-bar-wpm">0</span></p>
         </div>
       </div>
     </div>
@@ -20,6 +21,9 @@
       <h1>JUST TYPE FAST</h1>
     </header>
     <main id="app" class="container">
+      <div id="health-bar-container">
+        <div id="health-bar"></div>
+      </div>
       <div id="sample-text" class="mar-v-1"></div>
       <textarea id="typing-input" class="mar-v-1" placeholder="Start typing here..."></textarea>
       <div id="keyboard-container" class="mar-v-1"></div>
