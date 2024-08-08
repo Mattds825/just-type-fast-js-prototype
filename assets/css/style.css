@@ -402,3 +402,41 @@ footer p {
 Code credits
 https://codepen.io/MatthewShields/pen/pwrXpV
 */
+
+
+/* Code for for coin container */
+
+#current-coin-container{
+  height: 48px;
+}
+
+#current-coin-container span,
+#current-level-container span{
+  font-size: 1.3rem;
+  line-height: 48px;
+}
+
+#current-coin-img{
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+#collected-coins-container img{
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+#current-level-container span{
+  font-size: 1.3rem;
+  line-height: 48px;
+}
+
+#collected-coins-container-result img{
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+#current-level-container-result span{
+  font-size: 1.3rem;
+  line-height: 48px;
+}

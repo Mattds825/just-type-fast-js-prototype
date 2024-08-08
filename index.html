@@ -13,6 +13,7 @@
     <title>Just Type Fast</title>
   </head>
   <body>
+    <!-- Round Completion Modal -->
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -24,20 +25,49 @@
         </div>
       </div>
     </div>
+    <!-- /.Round Completion Modal -->
     <header>
       <h1>JUST TYPE FAST</h1>
     </header>
     <main id="app" class="container">
+      <div id="current-level-container">
+        <span>Current Level:</span><span id="current-level">1</span>
+      </div>
+      <div id="current-coin-container">
+        <span>Current Coin:</span
+        ><img
+          id="current-coin-img"
+          src="assets/images/coin-animations/coin-animation-bronze.gif"
+          alt="Bronze Coin Animation"
+        />
+      </div>
+      <!-- HelathBar -->
       <div id="health-bar-container">
         <div id="health-bar"></div>
       </div>
+      <!-- /. HealthBar -->
+       
+      <!-- Sample Text -->
       <div id="sample-text" class="mar-v-1"></div>
+      <!-- /. Sample Text -->
+       
+      <!-- Typing Area -->
       <textarea
         id="typing-input"
         class="mar-v-1"
         placeholder="Start typing here..."
       ></textarea>
+      <!-- /. Typing Area -->
+      
+      <!-- Keybaord Conatinaer -->
       <div id="keyboard-container" class="mar-v-1"></div>
+      <!-- /. Keybaord Conatinaer -->
+      
+      <!-- Collected Coins -->
+      <div id="collected-coins-container">
+        <h2>Collected Coins:</h2>
+      </div>
+      <!--/. Collected Coins -->
     </main>
     <footer>
       <p>&copy JUSTTYPEFAST 2024</p>

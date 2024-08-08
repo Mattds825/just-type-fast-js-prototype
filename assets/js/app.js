@@ -5,6 +5,13 @@ $(document).ready(function () {
   let startTime = null; // used to calculate result
   let wpm = 0;
   let accuracy = 100;
+  let currentLevel = 1;
+  let curerntCoin = "Bronze";
+  let currentCoinImg = "assets/images/coin-images/coin-image-bronze.png"
+
+  const silverLevel = 2;
+  const goldLevel = 4;
+  const diamondLevel = 6;
 
   /* Values for healthbar */
 
@@ -169,6 +176,7 @@ $(document).ready(function () {
       document.getElementById("typing-input").blur();
       modal.style.display = "block";
       resetHealthBar();
+      addCoin();
     }
     updateHighlightedText(); // highlight correct keys in sample text
     highlightKey(inputValue.slice(-1)); // Highlight the last typed key
@@ -254,9 +262,29 @@ $(document).ready(function () {
 
   // Move to the next phrase
   const nextPhrase = () => {
-    // sampleText = generateSampleText();
+    console.log("next phrase");
+    currentLevel += 1;
+    $("#current-level").text(currentLevel);
+    handleCoinChange();
     displaySampleText();
   };
+
+  // handle the coin change
+
+  function handleCoinChange(){
+    console.log("handling coin change");
+    if(currentLevel > silverLevel){
+      currentCoinImg = "assets/images/coin-images/coin-image-silver.png";
+      $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-silver.gif'); 
+    } else if(currentLevel > goldLevel){
+      currentCoinImg = "assets/images/coin-images/coin-image-gold.png";
+      $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-gold.gif');
+    } else if(currentLevel > diamondLevel){
+      $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-diamond.gif');
+      currentCoinImg = "assets/images/coin-images/coin-image-diamond.png";
+    }
+
+  }
 
   // Reset the healthbar
   const resetHealthBar = () => {
@@ -266,6 +294,14 @@ $(document).ready(function () {
     healthBarWPM += healthBarWpmChange;
     $('#health-bar').css('width', '100%'); // Upadate CSS
   }
+
+  // Add coin on completion of phase
+  const addCoin = () => {
+    console.log("adding coin");
+    const coinImg = $('<img>').attr('src', currentCoinImg); 
+    $('#collected-coins-container').append(coinImg);
+    $('#collected-coins-container-result').append(coinImg);
+  };
 
   // Handle the restart
   const handleRestart = () => {
