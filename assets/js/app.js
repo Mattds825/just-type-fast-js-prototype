@@ -214,14 +214,14 @@ $(document).ready(function () {
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
     modal.style.display = "none";
-    handleRestart();
+    resetValues();
   };
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
-      handleRestart();
+      resetValues();
       document.getElementById("typing-input").focus();
     }
   };
@@ -234,10 +234,10 @@ $(document).ready(function () {
         console.log("enter restart");
         modal.style.display = "none";
         inputValue = "";
-        handleRestart();        
+        resetValues();        
       }
     } else if (e.key === 'Escape') {
-      handleRestart();
+      resetValues();
     } else {
       document.getElementById("typing-input").focus();
     }
@@ -251,10 +251,8 @@ $(document).ready(function () {
       if (healthBarWidth <= 0){
         healthBarWidth = 0;
         clearInterval(healthBarInterval);
-        alert("Game Over");
-        healthBarWPM = 30; 
-        handleRestart();
-        resetHealthBar();
+        alert("Game Over");        
+        restartGame();
       }
       $('#health-bar').css('width', healthBarWidth + '%'); // Update CSS
     }, 100); //Interval of 0.1 seconds
@@ -303,8 +301,15 @@ $(document).ready(function () {
     $('#collected-coins-container-result').append(coinImg);
   };
 
+  const resetCoins = () => {
+    currentCoinImg = "assets/images/coin-images/coin-image-bronze.png";
+    curerntCoin = "Bronze";
+    document.getElementById("collected-coins-container").innerHTML = "";
+    $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-bronze.gif'); 
+  }
+
   // Handle the restart
-  const handleRestart = () => {
+  const resetValues = () => {
     inputValue = "";
     startTime = null;
     wpm = 0;
@@ -317,4 +322,13 @@ $(document).ready(function () {
     $("#accuracy").text("100");
     $("#sample-text").children().removeClass("correct incorrect gray current");
   };
+
+  const restartGame = () =>{
+    console.log("restarting game");
+    resetValues();
+    resetCoins();
+    healthBarWPM = 30;     
+    currentLevel = 1;   
+    $("#current-level").text(currentLevel);    
+  }
 });

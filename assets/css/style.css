@@ -19,9 +19,9 @@
   --color-purple-sec: #732d91;
   --color-purple-shadow: #4b2165;
 
-  --color-pink-main: #FF69B4;
-  --color-pink-sec: #FF1493;
-  --color-pink-shadow: #C71585;
+  --color-pink-main: #ff69b4;
+  --color-pink-sec: #ff1493;
+  --color-pink-shadow: #c71585;
 
   --outline-width: 6px;
   --shadow-width: 4px;
@@ -76,6 +76,11 @@ footer p {
 .scores-container {
   text-align: center;
   color: #fff;
+}
+
+#sample-text{
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 #typing-input {
@@ -185,7 +190,6 @@ footer p {
     var(--color-yellow-shadow);
 }
 
-
 .middle {
   background: var(--color-green-main);
   box-shadow: inset calc(-1 * var(--shadow-width))
@@ -203,7 +207,6 @@ footer p {
   box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
     var(--color-green-shadow);
 }
-
 
 .index {
   background: var(--color-blue-main);
@@ -240,8 +243,6 @@ footer p {
   box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
     var(--color-red-shadow);
 }
-
-
 
 .key.highlighted {
   border: 2px solid yellow;
@@ -336,7 +337,6 @@ footer p {
     calc(-1 * var(--shadow-width)) 0px 0px var(--shadow-color); */
 }
 
-
 .eightbit-btn:before,
 .eightbit-btn:after {
   content: "";
@@ -360,7 +360,6 @@ footer p {
   border-right: var(--outline-width) black solid;
 }
 
-
 .btn-succes {
   background: var(--color-green-main);
   box-shadow: inset calc(-1 * var(--shadow-width))
@@ -378,7 +377,6 @@ footer p {
   box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
     var(--color-green-shadow);
 }
-
 
 .btn-err {
   background: var(--color-red-main);
@@ -403,40 +401,50 @@ Code credits
 https://codepen.io/MatthewShields/pen/pwrXpV
 */
 
-
 /* Code for for coin container */
 
-#current-coin-container{
+#current-coin-container,
+#current-level-container {
   height: 48px;
+  /* display: inline-block; */
+  float: left;
+  clear: both;
+  margin: 0.2rem 0;
 }
 
 #current-coin-container span,
-#current-level-container span{
-  font-size: 1.3rem;
+#current-level-container span {
+  font-size: 1rem;
   line-height: 48px;
 }
 
-#current-coin-img{
-  height: 1.8rem;
-  width: 1.8rem;
+#current-coin-img {
+  height: 1.4rem;
+  width: 1.4rem;
 }
 
-#collected-coins-container img{
+#collected-coins-container img {
   height: 2.5rem;
   width: 2.5rem;
 }
 
-#current-level-container span{
-  font-size: 1.3rem;
+#current-level-container span {
+  font-size: 1rem;
   line-height: 48px;
 }
 
-#collected-coins-container-result img{
+#collected-coins-container-result img {
   height: 1.5rem;
   width: 1.5rem;
 }
 
-#current-level-container-result span{
+#current-level-container-result span {
   font-size: 1.3rem;
   line-height: 48px;
+}
+
+#scoreboard {
+  border: 0.4rem dotted white;
+  margin: 0.5rem auto;
+  padding: 0.2rem;
 }
