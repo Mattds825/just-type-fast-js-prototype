@@ -136,6 +136,14 @@ footer p {
   padding-right: 2rem;
 }
 
+.row{
+  display: flex;
+}
+
+.col{
+  float:left;
+}
+
 /* Styles for the keybaord */
 
 .keyboard-row {
