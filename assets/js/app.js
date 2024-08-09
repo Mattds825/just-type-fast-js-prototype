@@ -126,11 +126,6 @@ $(document).ready(function () {
     return phrase.join(' ');
   };
 
-  // Highlight the corresponding key on the virtual keyboard
-  const highlightKey = (key) => {
-    $('.key').removeClass('highlighted'); // remove highleted from all keys
-    $(`.key[data-key="${key == " " ? 'Space' : key.toUpperCase()}"]`).addClass('highlighted');
-  };
 
   // Display the sample text
   const displaySampleText = () => {
@@ -161,8 +156,6 @@ $(document).ready(function () {
     startTime = null;
   };
 
- 
-
   // Handle input changes
   $("#typing-input").on("input", function () {
     inputValue = $(this).val();
@@ -174,7 +167,7 @@ $(document).ready(function () {
       console.log("calculating resluts");
       calculateResults();
       document.getElementById("typing-input").blur();
-      modal.style.display = "block";
+      roundCompleteModal.style.display = "block";
       resetHealthBar();
       addCoin();
     }
@@ -184,14 +177,18 @@ $(document).ready(function () {
 
   // Highlight the text based on the user's input
   const updateHighlightedText = () => {
-    inputValue.split("").forEach((char, idx) => {
+    $('#sample-text span').removeClass('current');
+
+    inputValue.split('').forEach((char, idx) => {
       const sampleChar = sampleText[idx];
       const span = $(`#char-${idx}`);
 
       if (char === sampleChar) {
+        //correctly typed characters
         span.addClass("correct");
         span.removeClass("incorrect gray");
       } else {
+        //incorrecly typed characters
         span.addClass("incorrect");
         span.removeClass("correct gray");
       }
@@ -199,28 +196,52 @@ $(document).ready(function () {
     for (let i = inputValue.length; i < sampleText.length; i++) {
       $(`#char-${i}`).addClass("gray");
     }
-    $(`#char-${inputValue.length}`).addClass("current");
+    
+    // Add the 'current' class to the current character
+    const currentIdx = inputValue.length;
+    $(`#char-${currentIdx}`).addClass('current');
+    
+    for(let i = inputValue.length; i < sampleText.length; i++){
+
+    }
+  };
+
+
+  // Highlight the corresponding key on the virtual keyboard
+  const highlightKey = (key) => {
+    $('.key').removeClass('highlighted'); // remove highleted from all keys
+    $(`.key[data-key="${key == " " ? 'Space' : key.toUpperCase()}"]`).addClass('highlighted');
   };
 
   //Initial Render
   renderKeyboard();
 
   // Get the modal
-  var modal = document.getElementById("myModal");
+  var roundCompleteModal = document.getElementById("round-complete-modal");
+  var gameOverModal = document.getElementById("game-over-modal");
 
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
-    modal.style.display = "none";
-    resetValues();
+    if(roundCompleteModal.style.display != "none"){
+      roundCompleteModal.style.display = "none";
+      resetValues();  
+    } else if(gameOverModal.style.display != "none"){
+      gameOverModal.style.display = "none";
+      restartGame();
+    }
   };
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
+    if (event.target == roundCompleteModal) {
+      roundCompleteModal.style.display = "none";
+      resetValues();
+      document.getElementById("typing-input").focus();
+    } else if (event.target == gameOverModal) {
+      gameOverModal.style.display = "none";
       resetValues();
       document.getElementById("typing-input").focus();
     }
@@ -229,15 +250,21 @@ $(document).ready(function () {
    // Handle special keys
   $(document).keydown(function (e) {
     if (e.key === 'Enter') {
-      if (modal.style.display != "none") { 
+      if (roundCompleteModal.style.display != "none") { 
         document.getElementById("typing-input").blur();
         console.log("enter restart");
-        modal.style.display = "none";
+        roundCompleteModal.style.display = "none";
         inputValue = "";
         resetValues();        
+      } else if (gameOverModal.style.display != "none") { 
+        document.getElementById("typing-input").blur();
+        console.log("enter restart");
+        gameOverModal.style.display = "none";
+        inputValue = "";
+        restartGame();        
       }
     } else if (e.key === 'Escape') {
-      resetValues();
+      restartGame();
     } else {
       document.getElementById("typing-input").focus();
     }
@@ -251,8 +278,9 @@ $(document).ready(function () {
       if (healthBarWidth <= 0){
         healthBarWidth = 0;
         clearInterval(healthBarInterval);
-        alert("Game Over");        
-        restartGame();
+        // alert("Game Over"); 
+        gameOverModal.style.display = "block";       
+        
       }
       $('#health-bar').css('width', healthBarWidth + '%'); // Update CSS
     }, 100); //Interval of 0.1 seconds
@@ -294,14 +322,16 @@ $(document).ready(function () {
   }
 
   // Add coin on completion of phase
-  const addCoin = () => {
+  function addCoin(){
     console.log("adding coin");
-    const coinImg = $('<img>').attr('src', currentCoinImg); 
+    var coinImg = $('<img>').attr('src', currentCoinImg); 
+    var coinImgRes = $('<img>').attr('src', currentCoinImg); 
     $('#collected-coins-container').append(coinImg);
-    $('#collected-coins-container-result').append(coinImg);
+    $('#collected-coins-container-result').append(coinImgRes);
   };
 
   const resetCoins = () => {
+    console.log("resetting coins")
     currentCoinImg = "assets/images/coin-images/coin-image-bronze.png";
     curerntCoin = "Bronze";
     document.getElementById("collected-coins-container").innerHTML = "";

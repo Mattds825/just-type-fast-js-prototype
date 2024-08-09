@@ -44,6 +44,11 @@
   font-family: "Press Start 2P", cursive;
 }
 
+body{
+  position: relative;
+  min-height: 100vh;
+}
+
 .container {
   padding: 1rem;
   color: white;
@@ -52,6 +57,7 @@
   align-content: center;
   padding-left: 10%;
   padding-right: 10%;
+  padding-bottom: 2.5rem;
   text-align: center;
 }
 
@@ -93,11 +99,11 @@ footer p {
 /* Style for the prompt text while typing */
 
 .correct {
-  color: green;
+  background-color: var(--color-green-shadow);
 }
 
 .incorrect {
-  color: red;
+  background-color: var(--color-red-shadow);
 }
 
 .gray {
@@ -327,7 +333,7 @@ footer p {
   display: inline-block;
   position: relative;
   text-align: center;
-  font-size: 30px;
+  /* font-size: 30px; */
   padding: 0.2rem;
   border-style: none;
   font-family: "Press Start 2P", cursive;
