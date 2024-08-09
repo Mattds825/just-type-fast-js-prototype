@@ -7,7 +7,9 @@ $(document).ready(function () {
   let accuracy = 100;
   let currentLevel = 1;
   let curerntCoin = "Bronze";
-  let currentCoinImg = "assets/images/coin-images/coin-image-bronze.png"
+  let currentCoinImg = "assets/images/coin-images/coin-image-bronze.png";
+
+  let listenToKeys = true;
 
   const silverLevel = 2;
   const goldLevel = 4;
@@ -30,7 +32,7 @@ $(document).ready(function () {
   let healthBarWidth = 100;
   let healthBarDecremnet = 0.5; //how much is decremented each 0.1 second
   let healthBarInterval; // used for setInterval()
-  let healthBarWPM = 30; 
+  let healthBarWPM = 30;
   let healthBarWpmChange = 5;
 
   /* ./Values for healthbar */
@@ -82,8 +84,8 @@ $(document).ready(function () {
   };
   /* /.Values for  keybaord mapping */
 
-   // Handle the keybaord rendering
-   const renderKeyboard = () => {
+  // Handle the keybaord rendering
+  const renderKeyboard = () => {
     const $keyboardContainer = $("#keyboard-container");
     $keyboardContainer.empty(); // Clear previous content
 
@@ -108,8 +110,8 @@ $(document).ready(function () {
     });
   };
 
-   // Fetch the 200 most typed words from the JSON file
-  $.getJSON('assets/words.json', function (data) {
+  // Fetch the 200 most typed words from the JSON file
+  $.getJSON("assets/words.json", function (data) {
     words = data.words;
     displaySampleText();
   });
@@ -123,9 +125,8 @@ $(document).ready(function () {
         phrase.push(word);
       }
     }
-    return phrase.join(' ');
+    return phrase.join(" ");
   };
-
 
   // Display the sample text
   const displaySampleText = () => {
@@ -166,7 +167,8 @@ $(document).ready(function () {
     } else if (inputValue.length === sampleText.length) {
       console.log("calculating resluts");
       calculateResults();
-      document.getElementById("typing-input").blur();
+      listenToKeys = false;
+      // document.getElementById("typing-input").blur();
       roundCompleteModal.style.display = "block";
       resetHealthBar();
       addCoin();
@@ -175,11 +177,29 @@ $(document).ready(function () {
     highlightKey(inputValue.slice(-1)); // Highlight the last typed key
   });
 
+  function handleInputChange(){
+    if (inputValue.length === 1 && startTime === null) {
+      console.log("starting timer");
+      startTime = Date.now(); // Start the timer
+      startHealthBarDecrement(); // start healthbar decrement
+    } else if (inputValue.length === sampleText.length) {
+      console.log("calculating resluts");
+      calculateResults();
+      listenToKeys = false;
+      // document.getElementById("typing-input").blur();
+      roundCompleteModal.style.display = "block";
+      resetHealthBar();
+      addCoin();
+    }
+    updateHighlightedText(); // highlight correct keys in sample text
+    highlightKey(inputValue.slice(-1)); // Highlight the last typed key
+  }
+
   // Highlight the text based on the user's input
   const updateHighlightedText = () => {
-    $('#sample-text span').removeClass('current');
+    $("#sample-text span").removeClass("current");
 
-    inputValue.split('').forEach((char, idx) => {
+    inputValue.split("").forEach((char, idx) => {
       const sampleChar = sampleText[idx];
       const span = $(`#char-${idx}`);
 
@@ -196,21 +216,20 @@ $(document).ready(function () {
     for (let i = inputValue.length; i < sampleText.length; i++) {
       $(`#char-${i}`).addClass("gray");
     }
-    
+
     // Add the 'current' class to the current character
     const currentIdx = inputValue.length;
-    $(`#char-${currentIdx}`).addClass('current');
-    
-    for(let i = inputValue.length; i < sampleText.length; i++){
+    $(`#char-${currentIdx}`).addClass("current");
 
-    }
+    for (let i = inputValue.length; i < sampleText.length; i++) {}
   };
-
 
   // Highlight the corresponding key on the virtual keyboard
   const highlightKey = (key) => {
-    $('.key').removeClass('highlighted'); // remove highleted from all keys
-    $(`.key[data-key="${key == " " ? 'Space' : key.toUpperCase()}"]`).addClass('highlighted');
+    $(".key").removeClass("highlighted"); // remove highleted from all keys
+    $(`.key[data-key="${key == " " ? "Space" : key.toUpperCase()}"]`).addClass(
+      "highlighted"
+    );
   };
 
   //Initial Render
@@ -225,10 +244,10 @@ $(document).ready(function () {
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
-    if(roundCompleteModal.style.display != "none"){
+    if (roundCompleteModal.style.display != "none") {
       roundCompleteModal.style.display = "none";
-      resetValues();  
-    } else if(gameOverModal.style.display != "none"){
+      resetValues();
+    } else if (gameOverModal.style.display != "none") {
       gameOverModal.style.display = "none";
       restartGame();
     }
@@ -239,50 +258,63 @@ $(document).ready(function () {
     if (event.target == roundCompleteModal) {
       roundCompleteModal.style.display = "none";
       resetValues();
-      document.getElementById("typing-input").focus();
+      // document.getElementById("typing-input").focus();
+      listenToKeys = true;
     } else if (event.target == gameOverModal) {
       gameOverModal.style.display = "none";
       resetValues();
-      document.getElementById("typing-input").focus();
+      // document.getElementById("typing-input").focus();
+      listenToKeys = true;
     }
   };
 
-   // Handle special keys
+  // Handle keys
   $(document).keydown(function (e) {
-    if (e.key === 'Enter') {
-      if (roundCompleteModal.style.display != "none") { 
-        document.getElementById("typing-input").blur();
+    console.log("input text: "+inputValue);
+    if (e.key === "Enter") {
+      if (roundCompleteModal.style.display != "none") {
+        // document.getElementById("typing-input").blur();
+        listenToKeys = false;
         console.log("enter restart");
         roundCompleteModal.style.display = "none";
         inputValue = "";
-        resetValues();        
-      } else if (gameOverModal.style.display != "none") { 
-        document.getElementById("typing-input").blur();
+        resetValues();
+      } else if (gameOverModal.style.display != "none") {
+        // document.getElementById("typing-input").blur();
+        listenToKeys = false;
         console.log("enter restart");
         gameOverModal.style.display = "none";
         inputValue = "";
-        restartGame();        
+        restartGame();
       }
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       restartGame();
     } else {
-      document.getElementById("typing-input").focus();
+      // document.getElementById("typing-input").focus();
+      // Handle backspace
+      if (e.key === "Backspace") {
+        inputValue = inputValue.slice(0, -1);
+        handleInputChange();
+      } else if (e.key.length === 1) {
+        // Only handle single character keys
+        inputValue += e.key;
+        handleInputChange()
+      }
     }
   });
 
   // Heandle the healthbar decrement
   const startHealthBarDecrement = () => {
     console.log("decrementign by " + healthBarDecremnet);
-    healthBarInterval = setInterval(()=>{
+    healthBarInterval = setInterval(() => {
       healthBarWidth -= healthBarDecremnet;
-      if (healthBarWidth <= 0){
+      if (healthBarWidth <= 0) {
         healthBarWidth = 0;
         clearInterval(healthBarInterval);
-        // alert("Game Over"); 
-        gameOverModal.style.display = "block";       
-        
+        // alert("Game Over");
+        gameOverModal.style.display = "block";
       }
-      $('#health-bar').css('width', healthBarWidth + '%'); // Update CSS
+      $("#health-bar").css("width", healthBarWidth + "%"); // Update CSS
     }, 100); //Interval of 0.1 seconds
   };
 
@@ -297,46 +329,57 @@ $(document).ready(function () {
 
   // handle the coin change
 
-  function handleCoinChange(){
+  function handleCoinChange() {
     console.log("handling coin change");
-    if(currentLevel > silverLevel){
+    if (currentLevel > silverLevel) {
       currentCoinImg = "assets/images/coin-images/coin-image-silver.png";
-      $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-silver.gif'); 
-    } else if(currentLevel > goldLevel){
+      $("#current-coin-img").attr(
+        "src",
+        "assets/images/coin-animations/coin-animation-silver.gif"
+      );
+    } else if (currentLevel > goldLevel) {
       currentCoinImg = "assets/images/coin-images/coin-image-gold.png";
-      $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-gold.gif');
-    } else if(currentLevel > diamondLevel){
-      $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-diamond.gif');
+      $("#current-coin-img").attr(
+        "src",
+        "assets/images/coin-animations/coin-animation-gold.gif"
+      );
+    } else if (currentLevel > diamondLevel) {
+      $("#current-coin-img").attr(
+        "src",
+        "assets/images/coin-animations/coin-animation-diamond.gif"
+      );
       currentCoinImg = "assets/images/coin-images/coin-image-diamond.png";
     }
-
   }
 
   // Reset the healthbar
   const resetHealthBar = () => {
     clearInterval(healthBarInterval);
     healthBarWidth = 100;
-    healthBarDecremnet += healthBarWpmChange/100; //increase diffulty by 5 wpm
+    healthBarDecremnet += healthBarWpmChange / 100; //increase diffulty by 5 wpm
     healthBarWPM += healthBarWpmChange;
-    $('#health-bar').css('width', '100%'); // Upadate CSS
-  }
-
-  // Add coin on completion of phase
-  function addCoin(){
-    console.log("adding coin");
-    var coinImg = $('<img>').attr('src', currentCoinImg); 
-    var coinImgRes = $('<img>').attr('src', currentCoinImg); 
-    $('#collected-coins-container').append(coinImg);
-    $('#collected-coins-container-result').append(coinImgRes);
+    $("#health-bar").css("width", "100%"); // Upadate CSS
   };
 
+  // Add coin on completion of phase
+  function addCoin() {
+    console.log("adding coin");
+    var coinImg = $("<img>").attr("src", currentCoinImg);
+    var coinImgRes = $("<img>").attr("src", currentCoinImg);
+    $("#collected-coins-container").append(coinImg);
+    $("#collected-coins-container-result").append(coinImgRes);
+  }
+
   const resetCoins = () => {
-    console.log("resetting coins")
+    console.log("resetting coins");
     currentCoinImg = "assets/images/coin-images/coin-image-bronze.png";
     curerntCoin = "Bronze";
     document.getElementById("collected-coins-container").innerHTML = "";
-    $('#current-coin-img').attr('src', 'assets/images/coin-animations/coin-animation-bronze.gif'); 
-  }
+    $("#current-coin-img").attr(
+      "src",
+      "assets/images/coin-animations/coin-animation-bronze.gif"
+    );
+  };
 
   // Handle the restart
   const resetValues = () => {
@@ -346,19 +389,19 @@ $(document).ready(function () {
     accuracy = 100;
     resetHealthBar();
     nextPhrase();
-    $('.key').removeClass('highlighted'); // remove highleted from all keys
+    $(".key").removeClass("highlighted"); // remove highleted from all keys
     $("#typing-input").val("");
     $("#wpm").text("0");
     $("#accuracy").text("100");
     $("#sample-text").children().removeClass("correct incorrect gray current");
   };
 
-  const restartGame = () =>{
+  const restartGame = () => {
     console.log("restarting game");
     resetValues();
     resetCoins();
-    healthBarWPM = 30;     
-    currentLevel = 1;   
-    $("#current-level").text(currentLevel);    
-  }
+    healthBarWPM = 30;
+    currentLevel = 1;
+    $("#current-level").text(currentLevel);
+  };
 });
