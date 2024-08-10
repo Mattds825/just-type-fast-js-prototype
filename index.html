@@ -16,7 +16,7 @@
     <!-- Round Completion Modal -->
     <div id="round-complete-modal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <span id="close-round-complete" class="close">&times;</span>
         <div class="scores-container">
           <p>Words per minute: <span id="wpm">0</span></p>
           <p>Accuracy: <span id="accuracy">100</span>%</p>
@@ -29,12 +29,12 @@
      <!-- Game Over Modal -->
     <div id="game-over-modal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <span id="close-game-over" class="close">&times;</span>
         <div class="scores-container">
           <h3>Game Over</h3>
-          <p>Words per minute: <span id="wpm">0</span></p>
-          <p>Accuracy: <span id="accuracy">100</span>%</p>
-          <p>Healthbar WPM: <span id="health-bar-wpm">0</span></p>
+          <p>Highest WPM: <span id="wpm-result">0</span></p>
+          <p>Accuracy: <span id="accuracy-result">100</span>%</p>
+          <p>Healthbar WPM: <span id="health-bar-wpm-result">0</span></p>
           <p>Coins Collected:</p>
           <div id="collected-coins-container-result"></div>
           <p>Press the 'Enter' Key to Restart</p>
@@ -57,6 +57,9 @@
             src="assets/images/coin-animations/coin-animation-bronze.gif"
             alt="Bronze Coin Animation"
           />
+        </div>
+        <div id="current-wpm-container">
+          <span>Current WPM:</span><span id="current-wpm">30</span>
         </div>
       </div>
       <!-- HelathBar -->

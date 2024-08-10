@@ -11,9 +11,9 @@ $(document).ready(function () {
 
   let listenToKeys = true;
 
-  const silverLevel = 2;
-  const goldLevel = 4;
-  const diamondLevel = 6;
+  const silverLevel = 3;
+  const goldLevel = 6;
+  const diamondLevel = 9;
 
   /* Values for healthbar */
 
@@ -140,7 +140,7 @@ $(document).ready(function () {
   // Calculate WPM and accuracy
   const calculateResults = () => {
     if (!startTime) return;
-
+    console.log("calculating results");
     const durationInMinutes = (Date.now() - startTime) / 60000;
     const wordsTyped = inputValue.trim().split(/\s+/).length;
     const correctChars = inputValue
@@ -149,6 +149,10 @@ $(document).ready(function () {
 
     wpm = wordsTyped / durationInMinutes;
     accuracy = (correctChars / sampleText.length) * 100;
+
+    $("#wpm-result").text(wpm.toFixed(2));
+    $("#accuracy-result").text(accuracy.toFixed(2));
+    $("#health-bar-wpm-result").text(healthBarWPM.toFixed(2));
 
     $("#wpm").text(wpm.toFixed(2));
     $("#accuracy").text(accuracy.toFixed(2));
@@ -188,7 +192,7 @@ $(document).ready(function () {
       listenToKeys = false;
       // document.getElementById("typing-input").blur();
       roundCompleteModal.style.display = "block";
-      resetHealthBar();
+      stopHealthBar();
       addCoin();
     }
     updateHighlightedText(); // highlight correct keys in sample text
@@ -240,18 +244,21 @@ $(document).ready(function () {
   var gameOverModal = document.getElementById("game-over-modal");
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+  var closeGameOver = document.getElementById("close-game-over");
+  var closeRoundComplete = document.getElementById("close-round-complete");
 
   // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-    if (roundCompleteModal.style.display != "none") {
-      roundCompleteModal.style.display = "none";
-      resetValues();
-    } else if (gameOverModal.style.display != "none") {
-      gameOverModal.style.display = "none";
+  closeGameOver.onclick = function (){
+    console.log("clicked game over close");
+    gameOverModal.style.display = "none";
       restartGame();
-    }
-  };
+  }
+
+  closeRoundComplete.onclick = function (){
+    console.log("clicked round complete close");
+    roundCompleteModal.style.display = "none";
+    resetValues();
+  }
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
@@ -262,7 +269,7 @@ $(document).ready(function () {
       listenToKeys = true;
     } else if (event.target == gameOverModal) {
       gameOverModal.style.display = "none";
-      resetValues();
+      restartGame();
       // document.getElementById("typing-input").focus();
       listenToKeys = true;
     }
@@ -270,12 +277,11 @@ $(document).ready(function () {
 
   // Handle keys
   $(document).keydown(function (e) {
-    console.log("input text: "+inputValue);
     if (e.key === "Enter") {
       if (roundCompleteModal.style.display != "none") {
         // document.getElementById("typing-input").blur();
         listenToKeys = false;
-        console.log("enter restart");
+        console.log("enter reset");
         roundCompleteModal.style.display = "none";
         inputValue = "";
         resetValues();
@@ -310,6 +316,7 @@ $(document).ready(function () {
       healthBarWidth -= healthBarDecremnet;
       if (healthBarWidth <= 0) {
         healthBarWidth = 0;
+        calculateResults();
         clearInterval(healthBarInterval);
         // alert("Game Over");
         gameOverModal.style.display = "block";
@@ -323,6 +330,7 @@ $(document).ready(function () {
     console.log("next phrase");
     currentLevel += 1;
     $("#current-level").text(currentLevel);
+    $("#current-wpm").text(healthBarWPM);
     handleCoinChange();
     displaySampleText();
   };
@@ -331,19 +339,19 @@ $(document).ready(function () {
 
   function handleCoinChange() {
     console.log("handling coin change");
-    if (currentLevel > silverLevel) {
+    if (currentLevel >= silverLevel && currentLevel < goldLevel) {
       currentCoinImg = "assets/images/coin-images/coin-image-silver.png";
       $("#current-coin-img").attr(
         "src",
         "assets/images/coin-animations/coin-animation-silver.gif"
       );
-    } else if (currentLevel > goldLevel) {
+    } else if (currentLevel >= goldLevel && currentLevel < diamondLevel) {
       currentCoinImg = "assets/images/coin-images/coin-image-gold.png";
       $("#current-coin-img").attr(
         "src",
         "assets/images/coin-animations/coin-animation-gold.gif"
       );
-    } else if (currentLevel > diamondLevel) {
+    } else if (currentLevel >= diamondLevel) {
       $("#current-coin-img").attr(
         "src",
         "assets/images/coin-animations/coin-animation-diamond.gif"
@@ -357,9 +365,14 @@ $(document).ready(function () {
     clearInterval(healthBarInterval);
     healthBarWidth = 100;
     healthBarDecremnet += healthBarWpmChange / 100; //increase diffulty by 5 wpm
-    healthBarWPM += healthBarWpmChange;
+    healthBarWPM += 3;
+    console.log("reseting wpm to: " + healthBarWPM);
     $("#health-bar").css("width", "100%"); // Upadate CSS
   };
+
+  const stopHealthBar = () => {
+    clearInterval(healthBarInterval);
+  }
 
   // Add coin on completion of phase
   function addCoin() {
@@ -401,7 +414,9 @@ $(document).ready(function () {
     resetValues();
     resetCoins();
     healthBarWPM = 30;
+    healthBarDecremnet = 0.5;
     currentLevel = 1;
     $("#current-level").text(currentLevel);
+    $("#current-wpm").text(healthBarWPM);
   };
 });

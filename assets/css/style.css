@@ -418,7 +418,8 @@ https://codepen.io/MatthewShields/pen/pwrXpV
 /* Code for for coin container */
 
 #current-coin-container,
-#current-level-container {
+#current-level-container,
+#current-wpm-container {
   height: 48px;
   /* display: inline-block; */
   float: left;
@@ -427,7 +428,8 @@ https://codepen.io/MatthewShields/pen/pwrXpV
 }
 
 #current-coin-container span,
-#current-level-container span {
+#current-level-container span,
+#current-wpm-container span {
   font-size: 1rem;
   line-height: 48px;
 }
@@ -442,7 +444,8 @@ https://codepen.io/MatthewShields/pen/pwrXpV
   width: 2.5rem;
 }
 
-#current-level-container span {
+#current-level-container span,
+#current-wpm-container span {
   font-size: 1rem;
   line-height: 48px;
 }
