@@ -42,24 +42,40 @@
       </div>
     </div>
     <!-- /.Game Over Modal -->
+     <!-- Settings Modal -->
+     <div id="settings-modal" class="modal">
+      <div class="modal-content">
+        <span id="close-settings" class="close">&times;</span>
+        <div class="scores-container">
+          <button id="hide-keyboard-btn" class="eightbit-btn btn-info" aria-pressed="false">Hide Keybaord</button>
+          <button id="hide-hands-btn" class="eightbit-btn btn-info" aria-pressed="false">Hide Hands</button>
+        </div>
+      </div>
+    </div>
+     <!-- /.Settings Modal -->
     <header>
       <h1>JUST TYPE FAST</h1>
     </header>
     <main id="app" class="container">
-      <div id="scoreboard" class="mar-v-1">
-        <div id="current-level-container">
-          <span>Current Level:</span><span id="current-level">1</span>
+      <div class="row">
+        <div id="settings-btn-container">
+          <button id="settings-btn" class="eightbit-btn btn-info">Settings</button>
         </div>
-        <div id="current-coin-container">
-          <span>Current Coin:</span
-          ><img
-            id="current-coin-img"
-            src="assets/images/coin-animations/coin-animation-bronze.gif"
-            alt="Bronze Coin Animation"
-          />
-        </div>
-        <div id="current-wpm-container">
-          <span>Current WPM:</span><span id="current-wpm">30</span>
+        <div id="scoreboard" class="mar-v-1">
+          <div id="current-level-container">
+            <span>Current Level:</span><span id="current-level">1</span>
+          </div>
+          <div id="current-coin-container">
+            <span>Current Coin:</span
+            ><img
+              id="current-coin-img"
+              src="assets/images/coin-animations/coin-animation-bronze.gif"
+              alt="Bronze Coin Animation"
+            />
+          </div>
+          <div id="current-wpm-container">
+            <span>Current WPM:</span><span id="current-wpm">30</span>
+          </div>
         </div>
       </div>
       <!-- HelathBar -->

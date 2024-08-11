@@ -39,8 +39,6 @@ $(document).ready(function () {
 
   /* ./Values for healthbar */
 
-  
-
   // Fetch the 200 most typed words from the JSON file
   $.getJSON("assets/words.json", function (data) {
     words = data.words;
@@ -92,27 +90,7 @@ $(document).ready(function () {
     startTime = null;
   };
 
-  // Handle input changes
-  $("#typing-input").on("input", function () {
-    inputValue = $(this).val();
-    if (inputValue.length === 1 && startTime === null) {
-      console.log("starting timer");
-      startTime = Date.now(); // Start the timer
-      startHealthBarDecrement(); // start healthbar decrement
-    } else if (inputValue.length === sampleText.length) {
-      console.log("calculating resluts");
-      calculateResults();
-      listenToKeys = false;
-      // document.getElementById("typing-input").blur();
-      roundCompleteModal.style.display = "block";
-      resetHealthBar();
-      addCoin();
-    }
-    updateHighlightedText(); // highlight correct keys in sample text
-    highlightKey(inputValue.slice(-1)); // Highlight the last typed key
-  });
-
-  function handleInputChange(){
+  function handleInputChange() {
     if (inputValue.length === 1 && startTime === null) {
       console.log("starting timer");
       startTime = Date.now(); // Start the timer
@@ -159,31 +137,67 @@ $(document).ready(function () {
     for (let i = inputValue.length; i < sampleText.length; i++) {}
   };
 
-  
-
   //Initial Render
   renderKeyboard();
 
   // Get the modal
   var roundCompleteModal = document.getElementById("round-complete-modal");
   var gameOverModal = document.getElementById("game-over-modal");
+  var settingsModal = document.getElementById("settings-modal");
 
   // Get the <span> element that closes the modal
   var closeGameOver = document.getElementById("close-game-over");
   var closeRoundComplete = document.getElementById("close-round-complete");
+  var closeSettings = document.getElementById("close-settings");
 
   // When the user clicks on <span> (x), close the modal
-  closeGameOver.onclick = function (){
+  closeGameOver.onclick = function () {
     console.log("clicked game over close");
     gameOverModal.style.display = "none";
-      restartGame();
-  }
+    restartGame();
+  };
 
-  closeRoundComplete.onclick = function (){
+  closeRoundComplete.onclick = function () {
     console.log("clicked round complete close");
     roundCompleteModal.style.display = "none";
     resetValues();
-  }
+  };
+
+  closeSettings.onclick = function () {
+    console.log("clicked close settings");
+    settingsModal.style.display = "none";
+  };
+
+  var settingsBtn = document.getElementById("settings-btn");
+  var hideKeyboardBtn = document.getElementById("hide-keyboard-btn");
+  var hideHandsdBtn = document.getElementById("hide-hands-btn");
+  const keyboardContainer = $('#keyboard-container');
+  const handsContainer = $('#hands-layout-div');
+
+  settingsBtn.onclick = function () {
+    settingsModal.style.display = "block";
+  };
+
+  hideKeyboardBtn.onclick = function () {
+    
+    if (keyboardContainer.is(":visible")) {
+      keyboardContainer.hide();
+      $(this).text("Show Keyboard");
+    } else {
+      keyboardContainer.show();
+      $(this).text("Hide Keyboard");
+    }
+  };
+
+  hideHandsdBtn.onclick = function () {
+    if (handsContainer.is(":visible")) {
+      handsContainer.hide();
+      $(this).text("Show Hands");
+    } else {
+      handsContainer.show();
+      $(this).text("Hide Hands");
+    }
+  };
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
@@ -229,7 +243,7 @@ $(document).ready(function () {
       } else if (e.key.length === 1) {
         // Only handle single character keys
         inputValue += e.key;
-        handleInputChange()
+        handleInputChange();
       }
     }
   });
@@ -297,7 +311,7 @@ $(document).ready(function () {
 
   const stopHealthBar = () => {
     clearInterval(healthBarInterval);
-  }
+  };
 
   // Add coin on completion of phase
   function addCoin() {

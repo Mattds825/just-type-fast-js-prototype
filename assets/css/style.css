@@ -374,20 +374,20 @@ footer p {
   border-right: var(--outline-width) black solid;
 }
 
-.btn-succes {
+.btn-success {
   background: var(--color-green-main);
   box-shadow: inset calc(-1 * var(--shadow-width))
     calc(-1 * var(--shadow-width)) 0px 0px var(--color-green-shadow);
 }
 
-.btn-succes:hover,
-.btn-succes:focus {
+.btn-success:hover,
+.btn-success:focus {
   background: var(--color-green-sec);
   box-shadow: inset calc(-1.5 * var(--shadow-width))
     calc(-1.5 * var(--shadow-width)) 0px 0px var(--color-green-shadow);
 }
 
-.btn-succes:active {
+.btn-success:active {
   box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
     var(--color-green-shadow);
 }
@@ -400,7 +400,7 @@ footer p {
 
 .btn-err:hover,
 .btn-err:focus {
-  background: var(--color-green-sec);
+  background: var(--color-red-sec);
   box-shadow: inset calc(-1.5 * var(--shadow-width))
     calc(-1.5 * var(--shadow-width)) 0px 0px var(--color-red-shadow);
 }
@@ -410,8 +410,27 @@ footer p {
     var(--color-red-shadow);
 }
 
+
+.btn-info {
+  background: var(--color-blue-main);
+  box-shadow: inset calc(-1 * var(--shadow-width))
+    calc(-1 * var(--shadow-width)) 0px 0px var(--color-blue-shadow);
+}
+
+.btn-info:hover,
+.btn-info:focus {
+  background: var(--color-blue-sec);
+  box-shadow: inset calc(-1.5 * var(--shadow-width))
+    calc(-1.5 * var(--shadow-width)) 0px 0px var(--color-blue-shadow);
+}
+
+.btn-info:active {
+  box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
+    var(--color-blue-shadow);
+}
+
 /* 
-Code credits
+template Code credits
 https://codepen.io/MatthewShields/pen/pwrXpV
 */
 
@@ -464,4 +483,18 @@ https://codepen.io/MatthewShields/pen/pwrXpV
   border: 0.4rem dotted white;
   margin: 0.5rem auto;
   padding: 0.2rem;
+}
+
+#settings-btn-container{
+  display: flex;
+  margin: auto;
+}
+
+#settings-btn{
+  padding: 0.5rem
+}
+
+#hide-keyboard-btn,
+#hide-hands-btn{
+  padding: 0.5rem
 }
